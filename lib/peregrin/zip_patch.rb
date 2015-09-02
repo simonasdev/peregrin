@@ -1,12 +1,11 @@
 class Zip::File
 
   def content(path)
-    fopen(path) { |f| f.read }
+    find(path).first.get_input_stream.read
   end
 
-
   def find(path)
-    detect { |f| f.name == path }
+    glob(path)
   end
 
 end
