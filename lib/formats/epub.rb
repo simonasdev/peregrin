@@ -25,7 +25,7 @@ class Peregrin::Epub
 
 
   def self.validate(path)
-    raise FileNotFound.new(path)  unless File.file?(path)
+    raise FileNotFound.new(path) unless File.file?(path)
     begin
       zf = Zip::File.open(path)
     rescue => e
@@ -40,7 +40,7 @@ class Peregrin::Epub
       raise e.class.new(path)
     end
   ensure
-    zf.close  if zf
+    zf.close if zf
   end
 
 
@@ -153,7 +153,7 @@ class Peregrin::Epub
       inf_rels = %w[container manifest metadata signature encryption rights]
       inf_rels.each { |rel|
         src = "META-INF/#{rel}.xml"
-        next  unless zipfile.find(src)
+        next unless zipfile.find(src).present?
         @book.add_blueprint(rel.to_sym, src, zipfile.content(src))
       }
     end
