@@ -15,7 +15,7 @@ class Peregrin::Zhook
     raise FileNotFound.new(path)  unless File.file?(path)
     raise WrongExtension.new(path)  unless File.extname(path) == FILE_EXT
     begin
-      zf = Zip::Archive.open(path)
+      zf = Zip::File.open(path)
     rescue
       raise NotAZipArchive.new(path)
     end
@@ -41,7 +41,7 @@ class Peregrin::Zhook
   def self.read(path)
     validate(path)
     book = Peregrin::Book.new
-    Zip::Archive.open(path) { |zf|
+    Zip::File.open(path) { |zf|
       book.add_component(INDEX_PATH, zf.content(INDEX_PATH))
       zf.each { |entry|
         ze = entry.name
@@ -49,7 +49,7 @@ class Peregrin::Zhook
       }
     }
     book.read_resource_proc = lambda { |resource|
-      Zip::Archive.open(path) { |zipfile| zipfile.content(resource.src) }
+      Zip::File.open(path) { |zipfile| zipfile.content(resource.src) }
     }
 
     extract_properties_from_index(book)
@@ -82,7 +82,7 @@ class Peregrin::Zhook
   #
   def write(path)
     File.unlink(path)  if File.exists?(path)
-    Zip::Archive.open(path, Zip::CREATE) { |zipfile|
+    Zip::File.open(path, Zip::CREATE) { |zipfile|
       zipfile.add_buffer(INDEX_PATH, htmlize(index))
       @book.resources.each { |resource|
         zipfile.add_buffer(resource.src, @book.read_resource(resource))

@@ -27,7 +27,7 @@ class Peregrin::Epub
   def self.validate(path)
     raise FileNotFound.new(path)  unless File.file?(path)
     begin
-      zf = Zip::Archive.open(path)
+      zf = Zip::File.open(path)
     rescue => e
       raise NotAZipArchive.new(path)
     end
@@ -81,7 +81,7 @@ class Peregrin::Epub
     #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     def load_from_path(epub_path)
-      Zip::Archive.open(epub_path) { |zipfile|
+      Zip::File.open(epub_path) { |zipfile|
         load_blueprints(zipfile)
         extract_properties
         extract_components(zipfile)
@@ -91,7 +91,7 @@ class Peregrin::Epub
       @book.read_resource_proc = lambda { |resource|
         media_path = from_opf_root(resource.src)
         media_path = uri_unescape(media_path)
-        Zip::Archive.open(epub_path) { |zipfile| zipfile.content(media_path) }
+        Zip::File.open(epub_path) { |zipfile| zipfile.content(media_path) }
       }
     end
 

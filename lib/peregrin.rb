@@ -3,7 +3,7 @@ module Peregrin
   # Required libraries
   require 'fileutils'
   require 'cgi'
-  # require 'zipruby'
+  require 'zip'
   require 'nokogiri'
   require 'mime/types'
 

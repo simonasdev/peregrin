@@ -1,4 +1,4 @@
-class Zip::Archive
+class Zip::File
 
   def content(path)
     fopen(path) { |f| f.read }
