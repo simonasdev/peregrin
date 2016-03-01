@@ -15,7 +15,6 @@ class Peregrin::Epub
   MIMETYPE_MAP = {
     '.xhtml' => 'application/xhtml+xml',
     '.odt' => 'application/x-dtbook+xml',
-    '.odt' => 'application/x-dtbook+xml',
     '.ncx' => 'application/x-dtbncx+xml',
     '.epub' => 'application/epub+zip'
   }
