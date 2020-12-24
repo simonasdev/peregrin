@@ -18,7 +18,6 @@ spec = Gem::Specification.new do |s|
     Dir['test/**/*.rb']
   s.executables = ["peregrin"]
   s.require_path = 'lib'
-  s.has_rdoc = true
   s.extra_rdoc_files = ['README.md', 'MIT-LICENSE']
   s.rdoc_options += [
     '--title', 'Peregrin',
